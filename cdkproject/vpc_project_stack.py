@@ -10,7 +10,7 @@ class vpcprojectstack(Stack):
         # The code that defines your stack goes here
         vpc = ec2.Vpc(
         self, "Webserver_Vpc",
-        cidr="10.10.10.0/24",
+        ip_addresses= ec2.IpAddresses.cidr("10.10.10.0/24"),
         max_azs=2,
         nat_gateways=0,
         subnet_configuration=[
