@@ -1,9 +1,10 @@
-from aws_cdk import (aws_ec2 as ec2, core)
+from aws_cdk import (aws_ec2 as ec2, Stack)
+from constructs import Construct
 
 
-class vpcprojectstack(core.Stack):
+class vpcprojectstack(Stack):
 
-    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # The code that defines your stack goes here
@@ -13,10 +14,9 @@ class vpcprojectstack(core.Stack):
         max_azs=2,
         nat_gateways=0,
         subnet_configuration=[
-            ec2.SubnetConfiguration(name="public", cidr_mask=24, subnet_type=ec2.SubnetType.PUBLIC),
+            ec2.SubnetConfiguration(name="public", cidr_mask=26, subnet_type=ec2.SubnetType.PUBLIC),
             # ec2.SubnetConfiguration(name="private", cidr_mask=24, subnet_type=ec2.SubnetType.PRIVATE)
-            ec2.SubnetConfiguration(name="private", cidr_mask=24, subnet_type=ec2.SubnetType.ISOLATED)
         ]
     )  
     # Tag all VPC resources
-        core.Tag.add(vpc,key="Owner",value="Webserver",include_resource_types=[])
+        # Tag.add(vpc,key="Owner",value="Webserver",include_resource_types=[])
