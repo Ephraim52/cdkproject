@@ -10,7 +10,7 @@ class CustomVpcStack(core.Stack):
         super().__init__(scope, id, **kwargs)
 
         # The code that defines your stack goes here
-         # https://docs.aws.amazon.com/cdk/api/latest/python/aws_cdk.aws_ec2/Vpc.html
+        # https://docs.aws.amazon.com/cdk/api/latest/python/aws_cdk.aws_ec2/Vpc.html
         WebVPC = ec2.Vpc(
                 self, "Webserver VPC",
                 cidr="10.10.10.0/24",
@@ -49,6 +49,32 @@ class CustomVpcStack(core.Stack):
                 subnet_group_name="subnetGroupName",
                 subnets=[ec2.Subnet],
             )
+        )
+
+        network_acl_entry = ec2.NetworkAclEntry(self, "Public Webserver",
+            cidr= ec2.AclCidr.any_ipv4(),
+            network_acl= ec2.NetworkAcl,
+            rule_number=100,
+            traffic= ec2.AclTraffic,
+
+            # the properties below are optional
+            direction=ec2.TrafficDirection.EGRESS,
+            network_acl_entry_name="Public Webserver",
+            rule_action=ec2.Action.ALLOW
+            
+        )
+
+        network_acl_entry = ec2.NetworkAclEntry(self, "Public Webserver",
+            cidr= ec2.AclCidr,
+            network_acl= ec2.NetworkAcl,
+            rule_number=100,
+            traffic= ec2.AclTraffic,
+
+            # the properties below are optional
+            direction=ec2.TrafficDirection.INGRESS,
+            network_acl_entry_name="Public Webserver",
+            rule_action=ec2.Action.ALLOW
+            
         )
 
         networkaclprops = ec2.NetworkAcl(
